@@ -914,23 +914,22 @@ footer {
 
 @media (max-width:768px){
 
-    .header{
-        padding:15px 5%;
-    }
+.header{
+    height:85px;
+    padding:12px 5%;
+}
 
-    .logo{
-        gap:10px;
-    }
+.logo img{
+    width:70px;
+    height:auto;
+}
 
-    .logo img{
-        width:60px;
-        height:auto;
-    }
-
-    .logo span{
-        font-size:16px;
-        white-space:nowrap;
-    }
+.logo span{
+    font-size:14px;
+    font-weight:700;
+    white-space:nowrap;
+    color:#fff;
+}
 
 }/* MOBILE MENU BUTTON FIX */
 
@@ -1025,20 +1024,24 @@ footer {
 ========================== */
 
 .header{
-    height:90px;
+    height:110px;
     padding:0 6%;
     background:rgba(3,6,23,.95);
     border-bottom:1px solid rgba(124,92,255,.2);
 }
 
 .logo img{
-    width:180px;
+    width:220px;
 }
 
 .logo span{
-    display:none;
+    display:block;
+    font-size:20px;
+    font-weight:700;
+    color:#fff;
+    white-space:nowrap;
+    letter-spacing:1px;
 }
-
 .navbar{
     gap:45px;
 }
@@ -1383,15 +1386,59 @@ footer {
 .hero-image-box{
     width:100%;
     max-width:700px;
+    position:relative;
+    padding:12px;
+    border-radius:30px;
+    overflow:hidden;
 }
 
+.hero-image-box::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:30px;
+    background:linear-gradient(
+        90deg,
+        #ff00ff,
+        #00ffff,
+        #00ff66,
+        #ff00ff
+    );
+    background-size:300% 300%;
+  animation:rgbGlow 4s linear infinite;
+filter:blur(25px);
+opacity:1;
+}
+
+.hero-image-box img{
+    position:relative;
+    z-index:1;
+}
+@keyframes rgbGlow{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    50%{
+        background-position:100% 50%;
+    }
+
+    100%{
+        background-position:0% 50%;
+    }
+
+}
 .hero-image-box img{
     width:100%;
     height:auto;
     object-fit:cover;
     border-radius:25px;
+    display:block;
+    box-shadow:
+        0 0 25px rgba(0,255,255,.35),
+        0 0 50px rgba(140,0,255,.35);
 }
-
 /* LOGO FIX */
 .logo img{
     width:200px !important;
