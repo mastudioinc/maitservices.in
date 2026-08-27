@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Settings | MA IT SERVICES</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="effects.css">
+    <link rel="stylesheet" href="ui-upgrade.css">
+    <script src="appearance.js"></script>
+    <script src="accessibility.js"></script>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+</head>
+
+<body class="settings-page">
+
+    <a class="skip-to-content" href="#settingsMainContent">Skip to settings content</a>
+
+    <header class="settings-header">
+
+       <a href="#" class="settings-back-btn" aria-label="Go back" onclick="event.preventDefault(); history.back();">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+</a>
+
+        <div class="settings-brand">
+            <img
+                src="images/logo.png"
+                alt="MA IT SERVICES"
+            >
+
+            <div>
+                <h1>Settings</h1>
+                <p>MA IT SERVICES</p>
+            </div>
+        </div>
+
+    </header>
+
+
+    <main class="settings-layout" id="settingsMainContent" tabindex="-1">
+
+        <!-- LEFT SETTINGS MENU -->
+        <aside class="settings-sidebar">
+
+            <button class="settings-nav-item active" data-section="general">
+                <i class="fas fa-sliders-h"></i>
+                <span>General</span>
+            </button>
+
+            <button class="settings-nav-item" data-section="appearance">
+                <i class="fas fa-palette"></i>
+                <span>Appearance</span>
+            </button>
+
+            <button class="settings-nav-item" data-section="language">
+                <i class="fas fa-language"></i>
+                <span>Language</span>
+            </button>
+
+            <button class="settings-nav-item" data-section="effects">
+                <i class="fas fa-wand-magic-sparkles"></i>
+                <span>Visual Effects</span>
+            </button>
+
+            <button class="settings-nav-item" data-section="accessibility">
+                <i class="fas fa-universal-access"></i>
+                <span>Accessibility</span>
+            </button>
+
+            <button class="settings-nav-item" data-section="about">
+                <i class="fas fa-circle-info"></i>
+                <span>About</span>
+            </button>
+
+        </aside>
+
+
+        <!-- RIGHT SETTINGS CONTENT -->
+        <section class="settings-content">
+
+            <div class="settings-content-header">
+                <h2>General</h2>
+                <p>
+                    Manage your MA IT SERVICES website preferences.
+                </p>
+            </div>
+
+            <div class="settings-placeholder-card">
+                <i class="fas fa-sliders-h"></i>
+
+                <h3>General Settings</h3>
+
+                <p>
+                    Settings options will appear here.
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+<script src="effects.js"></script>
+<script src="language.js"></script>
+<script src="settings.js"></script>
+</body>
+
+</html>

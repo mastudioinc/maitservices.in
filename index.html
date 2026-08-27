@@ -17,26 +17,183 @@
 <link rel="canonical" href="https://mastudioinc.github.io/MA-IT-SERVICES-WEBSITE/">
 
 <link rel="icon" type="image/png" href="images/favicon.png">
-<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
 <meta property="og:title" content="MA IT SERVICES">
 <meta property="og:description" content="Empowering The IT Solutions">
 <meta property="og:image" content="https://mastudioinc.github.io/MA-IT-SERVICES-WEBSITE/images/logo.png">
 <meta property="og:type" content="website">
 
 <meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet" href="style.css">
-<link
+<link rel="stylesheet" href="effects.css">
+<link rel="stylesheet" href="ui-upgrade.css">
+<script src="appearance.js"></script>
+<script src="accessibility.js"></script>
 </head>
 
-<body>
+<body class="auth-locked">
+
+<a class="skip-to-content" href="#mainContent">Skip to main content</a>
 
 <div id="loader">
     <img src="images/logo.png" alt="MA IT SERVICES">
     <h2>MA IT SERVICES</h2>
     <p>Empowering The IT Solutions</p>
 </div>
+<div id="auth-screen">
 
+    <div class="auth-box">
+        <button
+    type="button"
+    id="authThemeToggle"
+    class="auth-theme-toggle"
+    aria-label="Switch theme"
+    title="Switch Light / Dark Mode"
+>
+    <i class="fas fa-moon"></i>
+</button>
+
+        <img src="images/logo.png" alt="MA IT SERVICES">
+
+        <h2>Welcome</h2>
+
+        <p>Sign in to continue to MA IT SERVICES</p>
+
+        <form id="login-form">
+
+            <input
+                type="email"
+                id="login-email"
+                placeholder="Email Address"
+                aria-label="Email address"
+                autocomplete="email"
+                required
+            >
+
+          <div class="password-field">
+    <input
+        type="password"
+        id="login-password"
+        placeholder="Password"
+        aria-label="Password"
+        autocomplete="current-password"
+        required
+    >
+
+    <button
+        type="button"
+        class="password-toggle"
+        id="loginPasswordToggle"
+        aria-label="Show password"
+    >
+        <i class="fas fa-eye"></i>
+    </button>
+</div>
+
+            <button type="submit">
+                Sign In
+            </button>
+
+        </form>
+
+        <button id="forgot-password-btn" type="button">
+            Forgot Password?
+        </button>
+<button id="create-account-btn" type="button">
+    Create Account
+</button>
+        <p id="login-message" role="status" aria-live="polite"></p>
+<div id="signup-section" hidden>
+
+    <h2>Create Account</h2>
+
+    <p>Create your MA IT SERVICES account</p>
+
+    <form id="signup-form">
+
+        <input
+            type="text"
+            id="signup-full-name"
+            placeholder="Full Name"
+            aria-label="Full name"
+            autocomplete="name"
+            required
+        >
+
+        <input
+            type="email"
+            id="signup-email"
+            placeholder="Email Address"
+            aria-label="Email address"
+            autocomplete="email"
+            required
+        >
+
+        <input
+            type="password"
+            id="signup-password"
+            placeholder="Password"
+            aria-label="Create password"
+            autocomplete="new-password"
+            required
+        >
+
+        <input
+            type="password"
+            id="signup-confirm-password"
+            placeholder="Confirm Password"
+            aria-label="Confirm password"
+            autocomplete="new-password"
+            required
+        >
+
+        <button type="submit">
+            Create Account
+        </button>
+
+    </form>
+<div id="signup-otp-section" hidden>
+
+    <h2>Verify Email</h2>
+
+    <p>
+        Enter the 6-digit verification code sent to your email
+    </p>
+
+    <input
+        type="text"
+        id="signup-otp"
+        placeholder="6-Digit Verification Code"
+        inputmode="numeric"
+        autocomplete="one-time-code"
+        maxlength="6"
+        aria-label="Six-digit verification code"
+    >
+
+    <button id="verify-signup-otp-btn" type="button">
+        Verify & Create Account
+    </button>
+
+    <button id="resend-signup-otp-btn" type="button">
+        Resend Code
+    </button>
+
+    <p id="signup-otp-message" role="status" aria-live="polite"></p>
+
+</div>
+    <button id="back-to-login-btn" type="button">
+        Back to Sign In
+    </button>
+
+    <p id="signup-message" role="status" aria-live="polite"></p>
+
+</div>
+    </div>
+
+</div>
 <div id="progress-bar"></div>
 
 <div class="particles">
@@ -57,25 +214,62 @@
         <span>MA IT SERVICES</span>
     </a>
 
-    <nav class="navbar" id="navMenu">
+    <nav class="navbar" id="navMenu" aria-label="Primary navigation">
         <a href="#home">Home</a>
-        <a href="#about">About</a>
+        <a href="settings.html#about">About</a>
         <a href="#services">Services</a>
         <a href="#products">Products</a>
         <a href="#highlights">Highlights</a>
 
     </nav>
  
-    <a href="mailto:maitservices-@outlook.com" class="nav-contact">
-        <i class="fas fa-envelope"></i>
-        Contact
+  <div class="header-actions">
+
+    <a
+        href="user-settings.html"
+        class="user-profile-btn"
+        id="userProfileBtn"
+        aria-label="Open User Settings"
+        title="User Settings"
+    >
+        <span class="header-user-avatar" aria-hidden="true">
+            <img id="headerUserAvatarImage" src="" alt="" hidden>
+            <i class="fas fa-user" id="headerUserAvatarFallback"></i>
+        </span>
     </a>
 
-    <div class="menu-btn" id="menuBtn">
+    <a
+        href="settings.html"
+        class="user-profile-btn settings-icon-btn"
+        id="settingsBtn"
+        aria-label="Settings"
+        title="Settings"
+    >
+        <span class="settings-button-icon" aria-hidden="true">
+            <i class="fas fa-cog"></i>
+        </span>
+        <span class="settings-button-label">Settings</span>
+        <span class="settings-button-status" aria-hidden="true"></span>
+    </a>
+
+</div>
+
+
+    
+    <button
+        type="button"
+        class="menu-btn"
+        id="menuBtn"
+        aria-controls="navMenu"
+        aria-expanded="false"
+        aria-label="Open navigation menu"
+    >
         <i class="fas fa-bars"></i>
-    </div>
+    </button>
 
 </header>
+
+<main id="mainContent" tabindex="-1">
 
 <section class="hero" id="home">
 
@@ -116,7 +310,7 @@
     <div class="hero-right">
 
         <div class="hero-image-box">
-<img src="images/hero-banner.png" alt="MA IT SERVICES Hero Banner">
+<img src="images/hero-banner.png" alt="MA IT SERVICES Hero Banner" fetchpriority="high" decoding="async">
         </div>
 
     </div>
@@ -251,118 +445,6 @@ Premium IT Hardware, Accessories and Professional Solutions
 
 </section>
 
-<section class="founder-company reveal" id="founder-company">
-
-<h2 class="section-title">
-MA STUDIO INC.
-</h2>
-
-<div class="company-wrapper">
-
-<div class="company-logo-box">
-
-<img src="images/ma-studio-logo.png"
-alt="MA STUDIO INC Logo">
-
-</div>
-
-<div class="company-info">
-
-<h3>
-Empowering The Business Solutions
-</h3>
-
-<p>
-MA STUDIO INC. is the founding organization behind
-MA IT SERVICES, delivering innovative business,
-technology and AI solutions.
-</p>
-
-<ul>
-
-<li>
-<strong>Email:</strong>
-MAStudio@outlook.in
-</li>
-
-<li>
-<strong>Email:</strong>
-mastudioin219@gmail.com
-</li>
-
-<li>
-<strong>Address:</strong>
-Brein Nishat, Srinagar,
-191121, Jammu & Kashmir
-</li>
-
-<li>
-<strong>Headquarters:</strong>
-MA Road, Srinagar, J&K
-</li>
-
-</ul>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="founder reveal" id="founder">
-
-<h2 class="section-title">
-Founder & Visionary
-</h2>
-
-<div class="founder-wrapper">
-
-<div class="founder-image">
-
-<img src="images/founder.jpg"
-alt="Mr Muzamil Ahmad Teli">
-
-</div>
-
-<div class="founder-content">
-
-<h3>
-MR MUZAMIL AHMAD TELI
-</h3>
-
-<p class="designation">
-IT / BMS / AI / ITS / DS / RS / WEB AI CD
-</p>
-
-<p>
-
-A technology enthusiast and business innovator
-focused on creating reliable, affordable and
-future-ready digital solutions for individuals,
-businesses and institutions.
-
-</p>
-
-<p>
-
-His vision is to empower organizations through
-advanced IT infrastructure, AI integration and
-professional technology services.
-
-</p>
-
-<a href="mailto:MUZAMIL.BUSINESS@OUTLOOK.IN"
-class="btn">
-
-Email The Founder
-
-</a>
-
-</div>
-
-</div>
-
-</section>
 <section class="highlights reveal" id="highlights">
 
 <h2 class="section-title">
@@ -424,39 +506,16 @@ to provide reliable products and professional services.
 
 <div class="brands-image">
 
-<img src="images/brands.jpg" alt="Electronic Brands">
+<img src="images/brands.jpg" alt="Electronic Brands" loading="lazy" decoding="async">
 
 </div>
 
 </section>
-<section class="about reveal" id="about" data-aos="fade-up">
-
-<h2 class="section-title">
-About MA IT SERVICES
-</h2>
-
-<p>
-
-MA IT SERVICES is a professional IT solutions provider dedicated to
-delivering reliable, affordable and high-quality technology products
-and services for individuals, businesses and institutions.
-
-We specialize in computer hardware, software installation,
-troubleshooting, maintenance, system upgrades, AI-powered solutions
-and complete technical support services.
-
-Our mission is to become a trusted technology partner by providing
-innovative, efficient and customer-focused IT solutions.
-
-</p>
-
-</section>
-
 <section class="cta-section reveal">
 
 <h2>
 Need Professional IT Assistance?
-</h2>D
+</h2>
 
 <p>
 Connect directly with MA IT SERVICES for support,
@@ -492,17 +551,22 @@ value="false">
 <input type="text"
 name="name"
 placeholder="Your Name"
+aria-label="Your name"
+autocomplete="name"
 required>
 
 <input type="email"
 name="email"
 placeholder="Your Email"
+aria-label="Your email"
+autocomplete="email"
 required>
 
 <textarea
 name="message"
 rows="6"
 placeholder="Your Message"
+aria-label="Your message"
 required></textarea>
 
 <button type="submit"
@@ -535,13 +599,15 @@ Send Message
 </section>
 
 
+</main>
+
 <footer class="new-footer">
 
     <div class="footer-grid">
 
         <div class="footer-brand">
 
-            <img src="images/logo.png" alt="MA IT SERVICES">
+            <img src="images/logo.png" alt="MA IT SERVICES" loading="lazy" decoding="async">
 
             <p>
                 Your Technology Partner For Growth And Success.
@@ -550,13 +616,13 @@ Send Message
 
             <div class="social-icons">
 
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
 
-                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
 
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
 
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
 
             </div>
 
@@ -568,7 +634,7 @@ Send Message
             <h3>Quick Links</h3>
 
             <a href="#home">Home</a>
-            <a href="#about">About</a>
+            <a href="settings.html#about">About</a>
             <a href="#services">Services</a>
             <a href="#products">Products</a>
 
@@ -604,45 +670,35 @@ Send Message
     </div>
 
 
-    <div class="footer-bottom">
+    <div class="footer-bottom footer-bottom-single">
 
         <span>
             © 2026 MA IT SERVICES. All Rights Reserved.
         </span>
 
-        <span>
-            Founded by MA STUDIO INC
-        </span>
-
     </div>
 
 </footer>
-<button id="topBtn">
+<button id="topBtn" type="button" aria-label="Back to top" title="Back to top">
 <i class="fas fa-arrow-up"></i>
 </button>
 
 <div class="lightbox"
 id="lightbox">
 
-<span class="close-lightbox">
+<button type="button" class="close-lightbox" aria-label="Close image preview">
 &times;
-</span>
+</button>
 
 <img id="lightbox-img"
 src=""
 alt="Product Image">
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="effects.js"></script>
+<script src="language.js"></script>
 <script src="script.js"></script>
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-
-<script>
-AOS.init({
-    duration: 1000,
-    once: true,
-    offset: 100
-});
-</script>
 </body>
 </html>
 

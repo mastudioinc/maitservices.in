@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>User Settings | MA IT SERVICES</title>
+    <meta name="description" content="Manage your MA IT SERVICES account profile.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="effects.css">
+    <link rel="stylesheet" href="ui-upgrade.css">
+    <link rel="stylesheet" href="user-settings.css">
+
+    <script src="appearance.js"></script>
+    <script src="accessibility.js"></script>
+</head>
+
+<body class="settings-page user-settings-page">
+    <a class="skip-to-content" href="#userSettingsMain">Skip to user settings</a>
+
+    <header class="settings-header user-settings-header">
+        <a href="index.html" class="settings-back-btn" aria-label="Back to main website" title="Back to main website">
+            <i class="fas fa-arrow-left" aria-hidden="true"></i>
+        </a>
+
+        <div class="settings-brand">
+            <img src="images/logo.png" alt="MA IT SERVICES">
+            <div>
+                <h1>User Settings</h1>
+                <p>MA IT SERVICES ACCOUNT</p>
+            </div>
+        </div>
+
+        <a class="user-settings-website-link" href="settings.html">
+            <i class="fas fa-sliders" aria-hidden="true"></i>
+            <span>Website Settings</span>
+        </a>
+    </header>
+
+    <section class="user-settings-auth-state" id="userSettingsAuthState" aria-live="polite">
+        <div class="user-settings-auth-card">
+            <span class="user-settings-auth-icon" aria-hidden="true">
+                <i class="fas fa-shield-halved"></i>
+            </span>
+            <h2 id="userSettingsAuthTitle">Checking your secure session</h2>
+            <p id="userSettingsAuthMessage">Please wait while your MA IT SERVICES account is verified.</p>
+            <a href="index.html" class="user-settings-signin-link" id="userSettingsSignInLink" hidden>
+                <i class="fas fa-right-to-bracket" aria-hidden="true"></i>
+                Return to Sign In
+            </a>
+        </div>
+    </section>
+
+    <main class="user-settings-layout" id="userSettingsMain" tabindex="-1" hidden>
+        <aside class="user-settings-sidebar" aria-label="User settings sections">
+            <section class="user-settings-account-card" aria-label="Signed-in account">
+                <div class="user-settings-mini-avatar" aria-hidden="true">
+                    <img class="user-settings-avatar-image" data-user-avatar src="" alt="" hidden>
+                    <span data-user-initials>U</span>
+                </div>
+                <div>
+                    <strong data-user-name>MA IT User</strong>
+                    <span data-user-email>Loading account…</span>
+                </div>
+                <span class="user-settings-sync-pill">
+                    <i class="fas fa-cloud-arrow-up" aria-hidden="true"></i>
+                    Account Synced
+                </span>
+            </section>
+
+            <nav class="user-settings-nav" aria-label="Account settings navigation">
+                <a href="#profilePicture" class="user-settings-nav-item active" aria-current="page">
+                    <i class="fas fa-user-circle" aria-hidden="true"></i>
+                    <span>My Profile</span>
+                </a>
+                <span class="user-settings-nav-item is-upcoming" aria-disabled="true">
+                    <i class="fas fa-shield-halved" aria-hidden="true"></i>
+                    <span>Login &amp; Security</span>
+                    <small>Next</small>
+                </span>
+                <span class="user-settings-nav-item is-upcoming" aria-disabled="true">
+                    <i class="fas fa-bell" aria-hidden="true"></i>
+                    <span>Notifications</span>
+                    <small>Next</small>
+                </span>
+                <span class="user-settings-nav-item is-upcoming" aria-disabled="true">
+                    <i class="fas fa-user-lock" aria-hidden="true"></i>
+                    <span>Privacy &amp; Data</span>
+                    <small>Next</small>
+                </span>
+            </nav>
+
+            <button type="button" class="user-settings-signout-button" id="userSettingsSignOut">
+                <i class="fas fa-arrow-right-from-bracket" aria-hidden="true"></i>
+                Sign Out
+            </button>
+        </aside>
+
+        <section class="user-settings-content" aria-labelledby="userSettingsTitle">
+            <header class="user-settings-content-header">
+                <div>
+                    <span class="user-settings-eyebrow">Personal Account</span>
+                    <h2 id="userSettingsTitle">My Profile</h2>
+                    <p>Manage the profile information connected permanently to your account.</p>
+                </div>
+                <span class="user-settings-secure-badge">
+                    <i class="fas fa-lock" aria-hidden="true"></i>
+                    Private &amp; Secure
+                </span>
+            </header>
+
+            <article class="user-settings-photo-card" id="profilePicture" aria-labelledby="profilePictureTitle">
+                <div class="user-settings-photo-heading">
+                    <div>
+                        <span class="user-settings-section-icon" aria-hidden="true">
+                            <i class="fas fa-camera"></i>
+                        </span>
+                        <div>
+                            <h3 id="profilePictureTitle">Profile Picture</h3>
+                            <p>Upload, change or remove your permanent account photo.</p>
+                        </div>
+                    </div>
+                    <span class="user-settings-storage-label">
+                        <i class="fas fa-cloud" aria-hidden="true"></i>
+                        Saved to your account
+                    </span>
+                </div>
+
+                <div class="user-settings-photo-workspace">
+                    <button
+                        type="button"
+                        class="user-settings-photo-dropzone"
+                        id="avatarDropzone"
+                        aria-label="Choose a new profile picture"
+                    >
+                        <span class="user-settings-large-avatar">
+                            <img class="user-settings-avatar-image" data-user-avatar src="" alt="Your profile picture" hidden>
+                            <span data-user-initials>U</span>
+                            <span class="user-settings-camera-chip" aria-hidden="true">
+                                <i class="fas fa-camera"></i>
+                            </span>
+                        </span>
+                        <strong id="avatarDropzoneTitle">Choose a profile photo</strong>
+                        <span>Click here or drop an image</span>
+                    </button>
+
+                    <div class="user-settings-photo-controls">
+                        <div class="user-settings-file-rules">
+                            <p>
+                                <i class="fas fa-image" aria-hidden="true"></i>
+                                JPG, PNG or WebP
+                            </p>
+                            <p>
+                                <i class="fas fa-weight-hanging" aria-hidden="true"></i>
+                                Maximum original file size: 5 MB
+                            </p>
+                            <p>
+                                <i class="fas fa-crop-simple" aria-hidden="true"></i>
+                                Automatically cropped and optimized
+                            </p>
+                        </div>
+
+                        <input
+                            type="file"
+                            id="avatarFileInput"
+                            accept="image/jpeg,image/png,image/webp"
+                            hidden
+                        >
+
+                        <div class="user-settings-photo-actions">
+                            <button type="button" class="user-settings-primary-button" id="chooseAvatarButton">
+                                <i class="fas fa-folder-open" aria-hidden="true"></i>
+                                <span id="chooseAvatarButtonText">Select Photo</span>
+                            </button>
+
+                            <button type="button" class="user-settings-save-button" id="saveAvatarButton" hidden disabled>
+                                <i class="fas fa-cloud-arrow-up" aria-hidden="true"></i>
+                                Save Photo
+                            </button>
+
+                            <button type="button" class="user-settings-secondary-button" id="cancelAvatarSelection" hidden>
+                                Cancel
+                            </button>
+
+                            <button type="button" class="user-settings-remove-button" id="removeAvatarButton" disabled>
+                                <i class="fas fa-trash-can" aria-hidden="true"></i>
+                                Remove Photo
+                            </button>
+                        </div>
+
+                        <p class="user-settings-photo-status" id="avatarStatus" role="status" aria-live="polite">
+                            Your profile picture will follow your account on every device.
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="user-settings-account-details" aria-labelledby="accountDetailsTitle">
+                <div class="user-settings-details-heading">
+                    <span class="user-settings-section-icon" aria-hidden="true">
+                        <i class="fas fa-id-card"></i>
+                    </span>
+                    <div>
+                        <h3 id="accountDetailsTitle">Account Details</h3>
+                        <p>Basic information received from your verified login account.</p>
+                    </div>
+                </div>
+
+                <dl class="user-settings-details-grid">
+                    <div>
+                        <dt>Full Name</dt>
+                        <dd data-user-name>MA IT User</dd>
+                    </div>
+                    <div>
+                        <dt>Email Address</dt>
+                        <dd data-user-email>Loading account…</dd>
+                    </div>
+                    <div>
+                        <dt>Email Status</dt>
+                        <dd class="user-settings-verified-value" id="userEmailStatus">
+                            <i class="fas fa-circle-check" aria-hidden="true"></i>
+                            Verified
+                        </dd>
+                    </div>
+                    <div>
+                        <dt>Profile Storage</dt>
+                        <dd class="user-settings-verified-value">
+                            <i class="fas fa-cloud" aria-hidden="true"></i>
+                            Permanent Sync
+                        </dd>
+                    </div>
+                </dl>
+            </article>
+        </section>
+    </main>
+
+    <dialog class="user-settings-dialog" id="removeAvatarDialog" aria-labelledby="removeAvatarDialogTitle">
+        <form method="dialog">
+            <span class="user-settings-dialog-icon" aria-hidden="true">
+                <i class="fas fa-trash-can"></i>
+            </span>
+            <h2 id="removeAvatarDialogTitle">Remove profile picture?</h2>
+            <p>The saved photo will be permanently removed from your account storage.</p>
+            <div>
+                <button value="cancel" class="user-settings-secondary-button">Keep Photo</button>
+                <button value="confirm" class="user-settings-remove-button">Remove Permanently</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="effects.js"></script>
+    <script src="language.js"></script>
+    <script src="user-settings.js"></script>
+</body>
+
+</html>
