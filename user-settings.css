@@ -1061,3 +1061,639 @@ html[data-a11y-motion-reduced="true"] .user-settings-page *::after {
         padding: 24px 18px;
     }
 }
+
+/* =========================================
+   COMPLETE ACCOUNT SETTINGS SECTIONS
+========================================= */
+
+.user-settings-nav-item {
+    width: 100%;
+    font: inherit;
+    text-align: left;
+    background: transparent;
+    cursor: pointer;
+    transition: color 170ms ease, border-color 170ms ease, background 170ms ease, transform 170ms ease;
+}
+
+.user-settings-nav-item:hover:not(.active) {
+    color: #ffffff;
+    border-color: var(--settings-accent-border);
+    background: rgba(255, 255, 255, .035);
+    transform: translateX(2px);
+}
+
+.user-settings-nav-item:focus-visible,
+.user-settings-input:focus-visible,
+.user-settings-password-input button:focus-visible,
+.user-settings-switch-input:focus-visible + .user-settings-switch-track {
+    outline: 3px solid var(--settings-accent-light);
+    outline-offset: 3px;
+}
+
+.user-settings-sync-pill[data-state="working"] {
+    color: var(--settings-accent-light);
+    background: var(--settings-accent-soft);
+}
+
+.user-settings-sync-pill[data-state="working"] i {
+    animation: user-settings-spin .8s linear infinite;
+}
+
+.user-settings-sync-pill[data-state="error"] {
+    color: #fecdd3;
+    background: rgba(190, 24, 93, .15);
+}
+
+.user-settings-panel {
+    min-width: 0;
+}
+
+.user-settings-section-stack {
+    display: grid;
+    gap: 18px;
+}
+
+.user-settings-section-card {
+    min-width: 0;
+    padding: clamp(20px, 3vw, 28px);
+    border: 1px solid var(--settings-accent-border);
+    border-radius: 22px;
+    background:
+        linear-gradient(135deg, var(--settings-accent-soft), transparent 60%),
+        rgba(255, 255, 255, .025);
+    box-shadow: 0 16px 38px rgba(0, 0, 0, .12);
+}
+
+.user-settings-section-card h3,
+.user-settings-section-card p,
+.user-settings-section-card ul {
+    margin: 0;
+}
+
+.user-settings-card-heading,
+.user-settings-information-row {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.user-settings-card-heading > div,
+.user-settings-information-row > div {
+    min-width: 0;
+}
+
+.user-settings-card-heading h3,
+.user-settings-information-row h3 {
+    color: #ffffff;
+    font-size: .98rem;
+    line-height: 1.35;
+}
+
+.user-settings-card-heading p,
+.user-settings-information-row p {
+    margin-top: 4px;
+    color: #aaa6b9;
+    font-size: .72rem;
+    line-height: 1.6;
+}
+
+.user-settings-section-card form,
+.user-settings-section-card > .user-settings-details-grid,
+.user-settings-section-card > .user-settings-action-row {
+    margin-top: 20px;
+}
+
+.user-settings-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.user-settings-field {
+    min-width: 0;
+    display: grid;
+    gap: 8px;
+    color: #dedbe7;
+    font-size: .69rem;
+    font-weight: 750;
+}
+
+.user-settings-field-wide {
+    grid-column: 1 / -1;
+}
+
+.user-settings-field > span:first-child {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.user-settings-field small {
+    color: #858196;
+    font-size: .58rem;
+    font-weight: 650;
+    text-transform: uppercase;
+}
+
+.user-settings-input {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 14px;
+    border: 1px solid var(--settings-accent-border);
+    border-radius: 13px;
+    color: #ffffff;
+    background: rgba(3, 6, 22, .54);
+    font: inherit;
+    font-size: .75rem;
+    transition: border-color 170ms ease, box-shadow 170ms ease, background 170ms ease;
+}
+
+.user-settings-input::placeholder {
+    color: #706c80;
+}
+
+.user-settings-input:focus {
+    border-color: var(--settings-accent-light);
+    background: rgba(3, 6, 22, .76);
+    box-shadow: 0 0 0 4px var(--settings-accent-soft);
+}
+
+.user-settings-input:disabled {
+    opacity: .58;
+    cursor: not-allowed;
+}
+
+.user-settings-field-help {
+    margin-top: 12px !important;
+    color: #858196;
+    font-size: .66rem;
+    line-height: 1.6;
+}
+
+.user-settings-password-input {
+    position: relative;
+    display: block;
+}
+
+.user-settings-password-input .user-settings-input {
+    padding-right: 50px;
+}
+
+.user-settings-password-input button {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    width: 37px;
+    height: 37px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 10px;
+    color: var(--settings-accent-light);
+    background: var(--settings-accent-soft);
+    cursor: pointer;
+    transform: translateY(-50%);
+}
+
+.user-settings-password-rules {
+    margin-top: 15px !important;
+    padding: 14px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px 14px;
+    border: 1px solid var(--settings-accent-border);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, .02);
+    list-style: none;
+}
+
+.user-settings-password-rules li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #918da0;
+    font-size: .63rem;
+    line-height: 1.45;
+}
+
+.user-settings-password-rules li i {
+    color: #6d6878;
+    font-size: .56rem;
+}
+
+.user-settings-password-rules li.is-met {
+    color: #86efac;
+}
+
+.user-settings-password-rules li.is-met i {
+    color: #22c55e;
+    font-size: .68rem;
+}
+
+.user-settings-action-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-settings-action-row button,
+.user-settings-information-row > button {
+    min-height: 45px;
+}
+
+.user-settings-section-status {
+    min-height: 22px;
+    margin-top: 13px !important;
+    color: #aaa6b9;
+    font-size: .68rem;
+    line-height: 1.6;
+}
+
+.user-settings-section-status.is-success {
+    color: #86efac;
+}
+
+.user-settings-section-status.is-error {
+    color: #fda4af;
+}
+
+.user-settings-section-status.is-working {
+    color: var(--settings-accent-light);
+}
+
+.user-settings-section-status.is-working::before {
+    content: "";
+    width: 11px;
+    height: 11px;
+    margin-right: 8px;
+    display: inline-block;
+    border: 2px solid var(--settings-accent-border);
+    border-top-color: var(--settings-accent-light);
+    border-radius: 50%;
+    vertical-align: -2px;
+    animation: user-settings-spin .7s linear infinite;
+}
+
+.user-settings-setting-row {
+    min-height: 76px;
+    padding: 14px;
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 13px;
+    border: 1px solid var(--settings-accent-border);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .025);
+    cursor: pointer;
+    transition: border-color 170ms ease, background 170ms ease, transform 170ms ease;
+}
+
+.user-settings-setting-row + .user-settings-setting-row {
+    margin-top: 11px;
+}
+
+.user-settings-setting-row:hover {
+    border-color: var(--settings-accent-light);
+    background: var(--settings-accent-soft);
+    transform: translateY(-1px);
+}
+
+.user-settings-setting-icon {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    color: var(--settings-accent-light);
+    background: var(--settings-accent-soft);
+}
+
+.user-settings-setting-icon.is-success {
+    color: #86efac;
+    background: rgba(34, 197, 94, .12);
+}
+
+.user-settings-setting-copy {
+    min-width: 0;
+}
+
+.user-settings-setting-copy strong,
+.user-settings-setting-copy small {
+    display: block;
+}
+
+.user-settings-setting-copy strong {
+    color: #ffffff;
+    font-size: .76rem;
+    line-height: 1.4;
+}
+
+.user-settings-setting-copy small {
+    margin-top: 4px;
+    color: #aaa6b9;
+    font-size: .65rem;
+    line-height: 1.55;
+}
+
+.user-settings-switch {
+    position: relative;
+    width: 52px;
+    height: 30px;
+    display: inline-block;
+}
+
+.user-settings-switch-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.user-settings-switch-track {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(148, 163, 184, .35);
+    border-radius: 999px;
+    background: rgba(148, 163, 184, .16);
+    transition: border-color 170ms ease, background 170ms ease, box-shadow 170ms ease;
+}
+
+.user-settings-switch-track::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #c8c5d2;
+    box-shadow: 0 3px 9px rgba(0, 0, 0, .3);
+    transition: transform 170ms ease, background 170ms ease;
+}
+
+.user-settings-switch-input:checked + .user-settings-switch-track {
+    border-color: var(--settings-accent-light);
+    background: var(--settings-accent);
+    box-shadow: 0 6px 18px var(--settings-accent-shadow);
+}
+
+.user-settings-switch-input:checked + .user-settings-switch-track::after {
+    background: var(--accent-contrast, #ffffff);
+    transform: translateX(22px);
+}
+
+.user-settings-switch-input:disabled + .user-settings-switch-track {
+    opacity: .42;
+    cursor: not-allowed;
+}
+
+.user-settings-information-row {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr) auto;
+}
+
+.user-settings-state-badge {
+    min-height: 34px;
+    padding: 0 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border-radius: 999px;
+    font-size: .62rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.user-settings-state-badge.is-essential {
+    color: #bff7d4;
+    background: rgba(34, 197, 94, .12);
+}
+
+.user-settings-security-grid dd {
+    min-height: 24px;
+}
+
+.user-settings-page :where(form[aria-busy="true"], .user-settings-section-card[aria-busy="true"]) {
+    cursor: progress;
+}
+
+/* Glass surfaces */
+html[data-glass="true"] .user-settings-page :where(
+    .user-settings-sidebar,
+    .user-settings-content,
+    .user-settings-auth-card,
+    .user-settings-photo-card,
+    .user-settings-account-details,
+    .user-settings-section-card,
+    .user-settings-dialog
+) {
+    -webkit-backdrop-filter: blur(18px) saturate(135%);
+    backdrop-filter: blur(18px) saturate(135%);
+}
+
+html[data-glass="false"] .user-settings-page :where(
+    .user-settings-section-card,
+    .user-settings-setting-row,
+    .user-settings-input,
+    .user-settings-password-rules,
+    .user-settings-dialog
+) {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background-image: none;
+}
+
+/* Light theme extensions */
+html[data-theme="light"] .user-settings-page :where(
+    .user-settings-section-card,
+    .user-settings-setting-row,
+    .user-settings-password-rules
+) {
+    background-color: rgba(255, 255, 255, .78);
+}
+
+html[data-theme="light"] .user-settings-page :where(
+    .user-settings-card-heading h3,
+    .user-settings-information-row h3,
+    .user-settings-setting-copy strong,
+    .user-settings-field,
+    .user-settings-input
+) {
+    color: #202238;
+}
+
+html[data-theme="light"] .user-settings-page :where(
+    .user-settings-card-heading p,
+    .user-settings-information-row p,
+    .user-settings-setting-copy small,
+    .user-settings-section-status,
+    .user-settings-field-help,
+    .user-settings-password-rules li
+) {
+    color: #66697e;
+}
+
+html[data-theme="light"] .user-settings-page .user-settings-input {
+    background: rgba(255, 255, 255, .86);
+}
+
+html[data-theme="light"] .user-settings-page .user-settings-nav-item:hover:not(.active) {
+    color: #202238;
+    background: rgba(255, 255, 255, .72);
+}
+
+@media (prefers-color-scheme: light) {
+    html[data-theme="system"] .user-settings-page :where(
+        .user-settings-section-card,
+        .user-settings-setting-row,
+        .user-settings-password-rules
+    ) {
+        background-color: rgba(255, 255, 255, .78);
+    }
+
+    html[data-theme="system"] .user-settings-page :where(
+        .user-settings-card-heading h3,
+        .user-settings-information-row h3,
+        .user-settings-setting-copy strong,
+        .user-settings-field,
+        .user-settings-input
+    ) {
+        color: #202238;
+    }
+
+    html[data-theme="system"] .user-settings-page :where(
+        .user-settings-card-heading p,
+        .user-settings-information-row p,
+        .user-settings-setting-copy small,
+        .user-settings-section-status,
+        .user-settings-field-help,
+        .user-settings-password-rules li
+    ) {
+        color: #66697e;
+    }
+
+    html[data-theme="system"] .user-settings-page .user-settings-input {
+        background: rgba(255, 255, 255, .86);
+    }
+}
+
+html[data-a11y-high-contrast="true"] .user-settings-page :where(
+    .user-settings-section-card,
+    .user-settings-setting-row,
+    .user-settings-password-rules,
+    .user-settings-input,
+    .user-settings-switch-track
+) {
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+    background: #000000 !important;
+    background-image: none !important;
+    box-shadow: none !important;
+}
+
+html[data-a11y-high-contrast="true"] .user-settings-page :where(
+    .user-settings-card-heading h3,
+    .user-settings-information-row h3,
+    .user-settings-setting-copy strong,
+    .user-settings-setting-copy small,
+    .user-settings-field,
+    .user-settings-section-status,
+    .user-settings-field-help,
+    .user-settings-password-rules li
+) {
+    color: #ffffff !important;
+}
+
+html[data-a11y-high-contrast="true"] .user-settings-page .user-settings-switch-input:checked + .user-settings-switch-track {
+    background: #00eaff !important;
+}
+
+html[data-compact="true"] .user-settings-section-stack {
+    gap: 13px;
+}
+
+html[data-compact="true"] .user-settings-section-card {
+    padding: 19px;
+}
+
+html[data-a11y-text-size="130"] .user-settings-form-grid,
+html[data-a11y-text-size="150"] .user-settings-form-grid {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+html[data-a11y-text-size="130"] .user-settings-field-wide,
+html[data-a11y-text-size="150"] .user-settings-field-wide {
+    grid-column: auto;
+}
+
+@media (max-width: 680px) {
+    .user-settings-form-grid,
+    .user-settings-password-rules {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .user-settings-field-wide {
+        grid-column: auto;
+    }
+
+    .user-settings-setting-row,
+    .user-settings-information-row {
+        grid-template-columns: 42px minmax(0, 1fr);
+        align-items: start;
+    }
+
+    .user-settings-setting-row .user-settings-switch,
+    .user-settings-information-row > :last-child {
+        grid-column: 2;
+        justify-self: start;
+    }
+
+    .user-settings-information-row > button {
+        width: auto;
+    }
+}
+
+@media (max-width: 520px) {
+    .user-settings-section-card {
+        padding: 17px 13px;
+        border-radius: 17px;
+    }
+
+    .user-settings-card-heading {
+        align-items: flex-start;
+    }
+
+    .user-settings-action-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .user-settings-action-row > *,
+    .user-settings-information-row > button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 380px) {
+    .user-settings-nav {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .user-settings-setting-row,
+    .user-settings-information-row {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .user-settings-setting-row .user-settings-switch,
+    .user-settings-information-row > :last-child {
+        grid-column: 1;
+    }
+}

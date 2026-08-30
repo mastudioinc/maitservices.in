@@ -40,12 +40,70 @@ const cancelAvatarSelection = document.getElementById("cancelAvatarSelection");
 const removeAvatarButton = document.getElementById("removeAvatarButton");
 const avatarStatus = document.getElementById("avatarStatus");
 const removeAvatarDialog = document.getElementById("removeAvatarDialog");
+const userSettingsSyncState = document.getElementById("userSettingsSyncState");
 
 let currentUser = null;
 let currentAvatarUrl = "";
 let selectedAvatarBlob = null;
 let selectedAvatarObjectUrl = "";
 let profileActionBusy = false;
+let userMetadataQueue = Promise.resolve();
+
+function setAccountSyncState(message = "Account Synced", state = "success") {
+    if (!userSettingsSyncState) return;
+
+    const label = userSettingsSyncState.querySelector("span");
+    if (label) label.textContent = message;
+
+    userSettingsSyncState.dataset.state = state;
+    userSettingsSyncState.classList.toggle("is-working", state === "working");
+    userSettingsSyncState.classList.toggle("is-error", state === "error");
+}
+
+function announceUserUpdate(user) {
+    window.dispatchEvent(new CustomEvent("ma:user-settings-user-updated", {
+        detail: { user }
+    }));
+}
+
+function updateUserMetadataPatch(patchOrFactory) {
+    const operation = userMetadataQueue.then(async () => {
+        setAccountSyncState("Saving Changes…", "working");
+
+        const { data: latestData, error: latestError } =
+            await userSettingsSupabase.auth.getUser();
+
+        if (latestError || !latestData?.user) {
+            throw latestError || new Error("Your login session has expired.");
+        }
+
+        const patch = typeof patchOrFactory === "function"
+            ? patchOrFactory(latestData.user)
+            : patchOrFactory;
+
+        const { data, error } = await userSettingsSupabase.auth.updateUser({
+            data: patch
+        });
+
+        if (error || !data?.user) {
+            throw error || new Error("Unable to save your account changes.");
+        }
+
+        currentUser = data.user;
+        updateAccountLabels(currentUser);
+        setAccountSyncState("Account Synced", "success");
+        announceUserUpdate(currentUser);
+        return currentUser;
+    });
+
+    userMetadataQueue = operation.then(
+        () => undefined,
+        () => {
+            setAccountSyncState("Sync Error", "error");
+        }
+    );
+    return operation;
+}
 
 function getUserDisplayName(user) {
     const metadata = user?.user_metadata || {};
@@ -154,6 +212,7 @@ function updateAccountLabels(user) {
 
 function showSignedOutState(message = "Please sign in to manage your profile picture.") {
     currentUser = null;
+    setAccountSyncState("Signed Out", "error");
     displayAvatar("");
     userSettingsMain.hidden = true;
     userSettingsAuthState.hidden = false;
@@ -165,10 +224,12 @@ function showSignedOutState(message = "Please sign in to manage your profile pic
 function showAuthenticatedState(user) {
     currentUser = user;
     updateAccountLabels(user);
+    setAccountSyncState("Account Synced", "success");
     userSettingsAuthState.hidden = true;
     userSettingsMain.hidden = false;
     userSettingsSignInLink.hidden = true;
     syncAvatarActions();
+    announceUserUpdate(user);
 }
 
 function friendlyProfileError(error) {
@@ -428,15 +489,13 @@ async function cleanupStoredAvatars(user) {
 
     if (cleanupError) return user;
 
-    const latestMetadata = {
-        ...(user.user_metadata || {}),
-        avatar_cleanup_paths: []
-    };
-    const { data, error } = await userSettingsSupabase.auth.updateUser({
-        data: latestMetadata
-    });
-
-    return error ? user : data.user;
+    try {
+        return await updateUserMetadataPatch({
+            avatar_cleanup_paths: []
+        });
+    } catch (_error) {
+        return user;
+    }
 }
 
 async function saveSelectedAvatar() {
@@ -445,7 +504,6 @@ async function saveSelectedAvatar() {
     setProfileBusy(true);
     setAvatarStatus("Saving your profile picture permanently…", "working");
 
-    const oldAvatarPath = currentUser.user_metadata?.avatar_path || "";
     const newAvatarPath = buildAvatarPath(currentUser.id, selectedAvatarBlob);
 
     try {
@@ -459,30 +517,28 @@ async function saveSelectedAvatar() {
 
         if (uploadError) throw uploadError;
 
-        const pendingCleanup = Array.from(new Set([
-            ...getPendingAvatarCleanupPaths(currentUser),
-            oldAvatarPath
-        ].filter((path) => path && path !== newAvatarPath))).slice(-6);
+        try {
+            currentUser = await updateUserMetadataPatch((latestUser) => {
+                const latestOldAvatarPath =
+                    latestUser.user_metadata?.avatar_path || "";
+                const pendingCleanup = Array.from(new Set([
+                    ...getPendingAvatarCleanupPaths(latestUser),
+                    latestOldAvatarPath
+                ].filter((path) => path && path !== newAvatarPath))).slice(-6);
 
-        const nextMetadata = {
-            ...(currentUser.user_metadata || {}),
-            avatar_path: newAvatarPath,
-            avatar_updated_at: new Date().toISOString(),
-            avatar_cleanup_paths: pendingCleanup
-        };
-        const { data, error: metadataError } =
-            await userSettingsSupabase.auth.updateUser({
-                data: nextMetadata
+                return {
+                    avatar_path: newAvatarPath,
+                    avatar_updated_at: new Date().toISOString(),
+                    avatar_cleanup_paths: pendingCleanup
+                };
             });
-
-        if (metadataError || !data?.user) {
+        } catch (metadataError) {
             await userSettingsSupabase.storage
                 .from(USER_SETTINGS_AVATAR_BUCKET)
                 .remove([newAvatarPath]);
             throw metadataError || new Error("Unable to connect the photo to your account.");
         }
 
-        currentUser = data.user;
         updateAccountLabels(currentUser);
         releaseSelectedAvatar();
         await loadSavedAvatar(currentUser);
@@ -507,29 +563,21 @@ async function removeSavedAvatar() {
     setProfileBusy(true);
     setAvatarStatus("Removing the saved profile picture…", "working");
 
-    const oldAvatarPath = currentUser.user_metadata.avatar_path;
-
     try {
-        const pendingCleanup = Array.from(new Set([
-            ...getPendingAvatarCleanupPaths(currentUser),
-            oldAvatarPath
-        ])).slice(-6);
-        const nextMetadata = {
-            ...(currentUser.user_metadata || {}),
-            avatar_path: null,
-            avatar_updated_at: new Date().toISOString(),
-            avatar_cleanup_paths: pendingCleanup
-        };
-        const { data, error: metadataError } =
-            await userSettingsSupabase.auth.updateUser({
-                data: nextMetadata
-            });
+        currentUser = await updateUserMetadataPatch((latestUser) => {
+            const latestAvatarPath =
+                latestUser.user_metadata?.avatar_path || "";
+            const pendingCleanup = Array.from(new Set([
+                ...getPendingAvatarCleanupPaths(latestUser),
+                latestAvatarPath
+            ].filter(Boolean))).slice(-6);
 
-        if (metadataError || !data?.user) {
-            throw metadataError || new Error("Unable to remove the profile picture.");
-        }
-
-        currentUser = data.user;
+            return {
+                avatar_path: null,
+                avatar_updated_at: new Date().toISOString(),
+                avatar_cleanup_paths: pendingCleanup
+            };
+        });
         currentAvatarUrl = "";
         releaseSelectedAvatar();
         displayAvatar("");
@@ -626,7 +674,9 @@ userSettingsSignOut.addEventListener("click", async () => {
 
     setProfileBusy(true);
     setAvatarStatus("Signing out safely…", "working");
-    const { error } = await userSettingsSupabase.auth.signOut();
+    const { error } = await userSettingsSupabase.auth.signOut({
+        scope: "local"
+    });
 
     if (error) {
         setProfileBusy(false);
@@ -655,6 +705,7 @@ userSettingsSupabase.auth.onAuthStateChange((event, session) => {
         ) {
             currentUser = session.user;
             updateAccountLabels(currentUser);
+            announceUserUpdate(currentUser);
         }
     }, 0);
 });
@@ -663,6 +714,20 @@ window.addEventListener("beforeunload", () => {
     if (selectedAvatarObjectUrl) {
         URL.revokeObjectURL(selectedAvatarObjectUrl);
     }
+});
+
+window.MA_USER_PROFILE = Object.freeze({
+    getUser: () => currentUser,
+    getClient: () => userSettingsSupabase,
+    updateMetadata: updateUserMetadataPatch,
+    acceptUser(user) {
+        if (!user) return;
+        currentUser = user;
+        updateAccountLabels(currentUser);
+        setAccountSyncState("Account Synced", "success");
+        announceUserUpdate(currentUser);
+    },
+    setSyncState: setAccountSyncState
 });
 
 initializeUserSettings();

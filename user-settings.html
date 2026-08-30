@@ -70,32 +70,64 @@
                     <strong data-user-name>MA IT User</strong>
                     <span data-user-email>Loading account…</span>
                 </div>
-                <span class="user-settings-sync-pill">
+                <span class="user-settings-sync-pill" id="userSettingsSyncState" data-state="success">
                     <i class="fas fa-cloud-arrow-up" aria-hidden="true"></i>
-                    Account Synced
+                    <span>Account Synced</span>
                 </span>
             </section>
 
-            <nav class="user-settings-nav" aria-label="Account settings navigation">
-                <a href="#profilePicture" class="user-settings-nav-item active" aria-current="page">
+            <nav class="user-settings-nav" role="tablist" aria-label="Account settings navigation">
+                <button
+                    type="button"
+                    class="user-settings-nav-item active"
+                    id="userSettingsTabProfile"
+                    data-user-settings-tab="profile"
+                    role="tab"
+                    aria-selected="true"
+                    aria-controls="userSettingsPanelProfile"
+                >
                     <i class="fas fa-user-circle" aria-hidden="true"></i>
                     <span>My Profile</span>
-                </a>
-                <span class="user-settings-nav-item is-upcoming" aria-disabled="true">
+                </button>
+                <button
+                    type="button"
+                    class="user-settings-nav-item"
+                    id="userSettingsTabSecurity"
+                    data-user-settings-tab="security"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="userSettingsPanelSecurity"
+                    tabindex="-1"
+                >
                     <i class="fas fa-shield-halved" aria-hidden="true"></i>
                     <span>Login &amp; Security</span>
-                    <small>Next</small>
-                </span>
-                <span class="user-settings-nav-item is-upcoming" aria-disabled="true">
+                </button>
+                <button
+                    type="button"
+                    class="user-settings-nav-item"
+                    id="userSettingsTabNotifications"
+                    data-user-settings-tab="notifications"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="userSettingsPanelNotifications"
+                    tabindex="-1"
+                >
                     <i class="fas fa-bell" aria-hidden="true"></i>
                     <span>Notifications</span>
-                    <small>Next</small>
-                </span>
-                <span class="user-settings-nav-item is-upcoming" aria-disabled="true">
+                </button>
+                <button
+                    type="button"
+                    class="user-settings-nav-item"
+                    id="userSettingsTabPrivacy"
+                    data-user-settings-tab="privacy"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="userSettingsPanelPrivacy"
+                    tabindex="-1"
+                >
                     <i class="fas fa-user-lock" aria-hidden="true"></i>
                     <span>Privacy &amp; Data</span>
-                    <small>Next</small>
-                </span>
+                </button>
             </nav>
 
             <button type="button" class="user-settings-signout-button" id="userSettingsSignOut">
@@ -107,9 +139,9 @@
         <section class="user-settings-content" aria-labelledby="userSettingsTitle">
             <header class="user-settings-content-header">
                 <div>
-                    <span class="user-settings-eyebrow">Personal Account</span>
-                    <h2 id="userSettingsTitle">My Profile</h2>
-                    <p>Manage the profile information connected permanently to your account.</p>
+                    <span class="user-settings-eyebrow" id="userSettingsEyebrow">Personal Account</span>
+                    <h2 id="userSettingsTitle" tabindex="-1">My Profile</h2>
+                    <p id="userSettingsDescription">Manage the profile information connected permanently to your account.</p>
                 </div>
                 <span class="user-settings-secure-badge">
                     <i class="fas fa-lock" aria-hidden="true"></i>
@@ -117,6 +149,13 @@
                 </span>
             </header>
 
+            <section
+                class="user-settings-panel user-settings-section-stack active"
+                id="userSettingsPanelProfile"
+                data-user-settings-panel="profile"
+                role="tabpanel"
+                aria-labelledby="userSettingsTabProfile"
+            >
             <article class="user-settings-photo-card" id="profilePicture" aria-labelledby="profilePictureTitle">
                 <div class="user-settings-photo-heading">
                     <div>
@@ -239,16 +278,206 @@
                     </div>
                 </dl>
             </article>
+
+            <article class="user-settings-section-card user-settings-profile-details-card" aria-labelledby="profileDetailsTitle">
+                <div class="user-settings-card-heading">
+                    <span class="user-settings-section-icon" aria-hidden="true"><i class="fas fa-user-pen"></i></span>
+                    <div>
+                        <h3 id="profileDetailsTitle">Personal Details</h3>
+                        <p>Update the name and optional contact details saved with your account.</p>
+                    </div>
+                </div>
+                <form id="profileDetailsForm" novalidate>
+                    <div class="user-settings-form-grid">
+                        <label class="user-settings-field" for="profileFullName">
+                            <span>Full Name</span>
+                            <input class="user-settings-input" id="profileFullName" name="full_name" type="text" maxlength="80" autocomplete="name" required>
+                        </label>
+                        <label class="user-settings-field" for="profilePhone">
+                            <span>Contact Number <small>Optional</small></span>
+                            <input class="user-settings-input" id="profilePhone" name="phone" type="tel" maxlength="20" inputmode="tel" autocomplete="tel" placeholder="Your contact number">
+                        </label>
+                        <label class="user-settings-field user-settings-field-wide" for="profileLocation">
+                            <span>Location <small>Optional</small></span>
+                            <input class="user-settings-input" id="profileLocation" name="location" type="text" maxlength="120" autocomplete="address-level2" placeholder="City, region or country">
+                        </label>
+                    </div>
+                    <p class="user-settings-field-help">Your login email stays read-only and can only be changed through a verified account flow.</p>
+                    <div class="user-settings-action-row">
+                        <button type="submit" class="user-settings-primary-button" id="saveProfileDetailsButton"><i class="fas fa-floppy-disk" aria-hidden="true"></i> Save Personal Details</button>
+                    </div>
+                    <p class="user-settings-section-status" id="profileDetailsStatus" role="status" aria-live="polite"></p>
+                </form>
+            </article>
+            </section>
+
+            <section class="user-settings-panel user-settings-section-stack" id="userSettingsPanelSecurity" data-user-settings-panel="security" role="tabpanel" aria-labelledby="userSettingsTabSecurity" hidden>
+                <article class="user-settings-section-card" id="securityOverviewCard" aria-labelledby="securityOverviewTitle">
+                    <div class="user-settings-card-heading">
+                        <span class="user-settings-section-icon" aria-hidden="true"><i class="fas fa-shield-halved"></i></span>
+                        <div><h3 id="securityOverviewTitle">Security Overview</h3><p>Verified details and recent account access information.</p></div>
+                    </div>
+                    <dl class="user-settings-details-grid user-settings-security-grid">
+                        <div><dt>Login Email</dt><dd id="securityEmailValue">Loading…</dd></div>
+                        <div><dt>Email Status</dt><dd class="user-settings-verified-value" id="securityEmailStatus">Checking…</dd></div>
+                        <div><dt>Last Sign In</dt><dd id="securityLastSignIn">Loading…</dd></div>
+                        <div><dt>Password Protection</dt><dd class="user-settings-verified-value"><i class="fas fa-lock" aria-hidden="true"></i> Encrypted by Supabase Auth</dd></div>
+                    </dl>
+                </article>
+
+                <article class="user-settings-section-card" aria-labelledby="changePasswordTitle">
+                    <div class="user-settings-card-heading">
+                        <span class="user-settings-section-icon" aria-hidden="true"><i class="fas fa-key"></i></span>
+                        <div><h3 id="changePasswordTitle">Change Password</h3><p>Your current password is verified before the new password is applied.</p></div>
+                    </div>
+                    <form id="changePasswordForm" novalidate>
+                        <div class="user-settings-form-grid">
+                            <label class="user-settings-field" for="currentPassword">
+                                <span>Current Password</span>
+                                <span class="user-settings-password-input"><input class="user-settings-input" id="currentPassword" type="password" autocomplete="current-password" required><button type="button" id="toggleCurrentPassword" aria-label="Show current password" aria-pressed="false"><i class="fas fa-eye" aria-hidden="true"></i></button></span>
+                            </label>
+                            <label class="user-settings-field" for="newPassword">
+                                <span>New Password</span>
+                                <span class="user-settings-password-input"><input class="user-settings-input" id="newPassword" type="password" autocomplete="new-password" minlength="10" required><button type="button" id="toggleNewPassword" aria-label="Show new password" aria-pressed="false"><i class="fas fa-eye" aria-hidden="true"></i></button></span>
+                            </label>
+                            <label class="user-settings-field" for="confirmNewPassword">
+                                <span>Confirm New Password</span>
+                                <span class="user-settings-password-input"><input class="user-settings-input" id="confirmNewPassword" type="password" autocomplete="new-password" minlength="10" required><button type="button" id="toggleConfirmNewPassword" aria-label="Show password confirmation" aria-pressed="false"><i class="fas fa-eye" aria-hidden="true"></i></button></span>
+                            </label>
+                            <label class="user-settings-field" for="passwordReauthCode" id="passwordReauthCodeField" hidden>
+                                <span>Email Verification Code</span>
+                                <input class="user-settings-input" id="passwordReauthCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="6-digit code">
+                            </label>
+                        </div>
+                        <ul class="user-settings-password-rules" id="passwordRequirements" aria-label="New password requirements">
+                            <li data-password-rule="length"><i class="fas fa-circle" aria-hidden="true"></i> At least 10 characters</li>
+                            <li data-password-rule="lower"><i class="fas fa-circle" aria-hidden="true"></i> One lowercase letter</li>
+                            <li data-password-rule="upper"><i class="fas fa-circle" aria-hidden="true"></i> One uppercase letter</li>
+                            <li data-password-rule="number"><i class="fas fa-circle" aria-hidden="true"></i> One number</li>
+                            <li data-password-rule="symbol"><i class="fas fa-circle" aria-hidden="true"></i> One symbol</li>
+                        </ul>
+                        <div class="user-settings-action-row">
+                            <button type="submit" class="user-settings-primary-button" id="changePasswordButton"><i class="fas fa-key" aria-hidden="true"></i> Update Password</button>
+                            <button type="button" class="user-settings-secondary-button" id="sendPasswordRecoveryButton"><i class="fas fa-envelope" aria-hidden="true"></i> Email Recovery Link</button>
+                        </div>
+                        <p class="user-settings-section-status" id="changePasswordStatus" role="status" aria-live="polite"></p>
+                    </form>
+                </article>
+
+                <article class="user-settings-section-card" aria-labelledby="accountSessionsTitle">
+                    <div class="user-settings-card-heading">
+                        <span class="user-settings-section-icon" aria-hidden="true"><i class="fas fa-laptop-shield"></i></span>
+                        <div><h3 id="accountSessionsTitle">Account Sessions</h3><p>Control which signed-in devices can continue using your account.</p></div>
+                    </div>
+                    <div class="user-settings-action-row">
+                        <button type="button" class="user-settings-secondary-button" id="signOutOtherSessionsButton"><i class="fas fa-laptop" aria-hidden="true"></i> Sign Out Other Devices</button>
+                        <button type="button" class="user-settings-remove-button" id="signOutAllSessionsButton"><i class="fas fa-power-off" aria-hidden="true"></i> Sign Out Every Device</button>
+                    </div>
+                    <p class="user-settings-section-status" id="sessionActionStatus" role="status" aria-live="polite">The sidebar Sign Out button affects only this browser.</p>
+                </article>
+            </section>
+
+            <section class="user-settings-panel user-settings-section-stack" id="userSettingsPanelNotifications" data-user-settings-panel="notifications" role="tabpanel" aria-labelledby="userSettingsTabNotifications" hidden>
+                <article class="user-settings-section-card" aria-labelledby="essentialEmailsTitle">
+                    <div class="user-settings-information-row">
+                        <span class="user-settings-setting-icon is-success" aria-hidden="true"><i class="fas fa-envelope-circle-check"></i></span>
+                        <div class="user-settings-setting-copy"><h3 id="essentialEmailsTitle">Essential Account Emails</h3><p>Verification codes and password-recovery emails are sent only when you request those account actions.</p></div>
+                        <span class="user-settings-state-badge is-essential"><i class="fas fa-lock" aria-hidden="true"></i> Essential</span>
+                    </div>
+                </article>
+
+                <article class="user-settings-section-card" aria-labelledby="communicationPreferencesTitle">
+                    <div class="user-settings-card-heading">
+                        <span class="user-settings-section-icon" aria-hidden="true"><i class="fas fa-envelope-open-text"></i></span>
+                        <div><h3 id="communicationPreferencesTitle">Communication Preferences</h3><p>These choices sync to your account. Automated email delivery is not connected yet.</p></div>
+                    </div>
+                    <form id="notificationPreferencesForm">
+                        <label class="user-settings-setting-row" for="notificationServiceUpdates">
+                            <span class="user-settings-setting-icon" aria-hidden="true"><i class="fas fa-screwdriver-wrench"></i></span>
+                            <span class="user-settings-setting-copy"><strong>Service Updates</strong><small>Save your preference for important service and platform news.</small></span>
+                            <span class="user-settings-switch"><input class="user-settings-switch-input" id="notificationServiceUpdates" type="checkbox"><span class="user-settings-switch-track" aria-hidden="true"></span></span>
+                        </label>
+                        <label class="user-settings-setting-row" for="notificationProductNews">
+                            <span class="user-settings-setting-icon" aria-hidden="true"><i class="fas fa-bullhorn"></i></span>
+                            <span class="user-settings-setting-copy"><strong>Products &amp; Offers</strong><small>Save whether you want optional product and offer announcements.</small></span>
+                            <span class="user-settings-switch"><input class="user-settings-switch-input" id="notificationProductNews" type="checkbox"><span class="user-settings-switch-track" aria-hidden="true"></span></span>
+                        </label>
+                        <div class="user-settings-action-row"><button type="submit" class="user-settings-primary-button" id="saveNotificationPreferencesButton"><i class="fas fa-cloud-arrow-up" aria-hidden="true"></i> Save Communication Choices</button></div>
+                        <p class="user-settings-section-status" id="notificationPreferencesStatus" role="status" aria-live="polite"></p>
+                    </form>
+                </article>
+
+                <article class="user-settings-section-card" aria-labelledby="browserNotificationsTitle">
+                    <div class="user-settings-card-heading">
+                        <span class="user-settings-section-icon" aria-hidden="true"><i class="fas fa-bell"></i></span>
+                        <div><h3 id="browserNotificationsTitle">Browser Notifications</h3><p>Enable and test notifications on this device while the website is open.</p></div>
+                    </div>
+                    <label class="user-settings-setting-row" for="browserNotificationsEnabled">
+                        <span class="user-settings-setting-icon" aria-hidden="true"><i class="fas fa-desktop"></i></span>
+                        <span class="user-settings-setting-copy"><strong>Use Browser Notifications</strong><small id="browserNotificationPermissionText">Checking browser permission…</small></span>
+                        <span class="user-settings-switch"><input class="user-settings-switch-input" id="browserNotificationsEnabled" type="checkbox"><span class="user-settings-switch-track" aria-hidden="true"></span></span>
+                    </label>
+                    <div class="user-settings-action-row"><button type="button" class="user-settings-secondary-button" id="sendTestNotificationButton" disabled><i class="fas fa-paper-plane" aria-hidden="true"></i> Send Test Notification</button></div>
+                    <p class="user-settings-section-status" id="browserNotificationStatus" role="status" aria-live="polite">This device setting does not enable background push notifications.</p>
+                </article>
+            </section>
+
+            <section class="user-settings-panel user-settings-section-stack" id="userSettingsPanelPrivacy" data-user-settings-panel="privacy" role="tabpanel" aria-labelledby="userSettingsTabPrivacy" hidden>
+                <article class="user-settings-section-card" aria-labelledby="privacyPreferencesTitle">
+                    <div class="user-settings-card-heading">
+                        <span class="user-settings-section-icon" aria-hidden="true"><i class="fas fa-user-shield"></i></span>
+                        <div><h3 id="privacyPreferencesTitle">Privacy Preferences</h3><p>Choose how your saved profile appears and how this device remembers website settings.</p></div>
+                    </div>
+                    <form id="privacyPreferencesForm">
+                        <label class="user-settings-setting-row" for="privacyShowAvatarInHeader">
+                            <span class="user-settings-setting-icon" aria-hidden="true"><i class="fas fa-image-portrait"></i></span>
+                            <span class="user-settings-setting-copy"><strong>Show Photo on Main Website</strong><small>Your private photo appears only inside your signed-in header and User Settings.</small></span>
+                            <span class="user-settings-switch"><input class="user-settings-switch-input" id="privacyShowAvatarInHeader" type="checkbox" checked><span class="user-settings-switch-track" aria-hidden="true"></span></span>
+                        </label>
+                        <label class="user-settings-setting-row" for="privacyRememberWebsitePreferences">
+                            <span class="user-settings-setting-icon" aria-hidden="true"><i class="fas fa-hard-drive"></i></span>
+                            <span class="user-settings-setting-copy"><strong>Remember Website Preferences</strong><small>Keep theme, colour, language, effects and accessibility choices on this device.</small></span>
+                            <span class="user-settings-switch"><input class="user-settings-switch-input" id="privacyRememberWebsitePreferences" type="checkbox" checked><span class="user-settings-switch-track" aria-hidden="true"></span></span>
+                        </label>
+                        <div class="user-settings-action-row"><button type="submit" class="user-settings-primary-button" id="savePrivacyPreferencesButton"><i class="fas fa-shield-halved" aria-hidden="true"></i> Save Privacy Choices</button></div>
+                        <p class="user-settings-section-status" id="privacyPreferencesStatus" role="status" aria-live="polite"></p>
+                    </form>
+                </article>
+
+                <article class="user-settings-section-card" aria-labelledby="privateStorageTitle">
+                    <div class="user-settings-information-row">
+                        <span class="user-settings-setting-icon is-success" aria-hidden="true"><i class="fas fa-lock"></i></span>
+                        <div class="user-settings-setting-copy"><h3 id="privateStorageTitle">Private Profile Storage</h3><p>Your profile picture is stored in a private bucket and accessed through a temporary signed link for your account.</p></div>
+                        <button type="button" class="user-settings-secondary-button" id="goToProfilePhotoButton">Manage Photo</button>
+                    </div>
+                </article>
+
+                <article class="user-settings-section-card" aria-labelledby="accountDataTitle">
+                    <div class="user-settings-card-heading">
+                        <span class="user-settings-section-icon" aria-hidden="true"><i class="fas fa-file-shield"></i></span>
+                        <div><h3 id="accountDataTitle">Your Website Data</h3><p>Download the account and preference data available to this signed-in website session.</p></div>
+                    </div>
+                    <dl class="user-settings-details-grid">
+                        <div><dt>Account ID</dt><dd id="privacyAccountId">Loading…</dd></div>
+                        <div><dt>Account Created</dt><dd id="privacyAccountCreatedAt">Loading…</dd></div>
+                    </dl>
+                    <div class="user-settings-action-row">
+                        <button type="button" class="user-settings-primary-button" id="downloadAccountDataButton"><i class="fas fa-download" aria-hidden="true"></i> Download My Website Data</button>
+                        <button type="button" class="user-settings-remove-button" id="clearDevicePreferencesButton"><i class="fas fa-rotate-left" aria-hidden="true"></i> Reset This Device</button>
+                    </div>
+                    <p class="user-settings-section-status" id="downloadAccountDataStatus" role="status" aria-live="polite">Passwords, session tokens, OTPs and private photo files are never included.</p>
+                </article>
+            </section>
         </section>
     </main>
 
-    <dialog class="user-settings-dialog" id="removeAvatarDialog" aria-labelledby="removeAvatarDialogTitle">
+    <dialog class="user-settings-dialog" id="removeAvatarDialog" aria-labelledby="removeAvatarDialogTitle" aria-describedby="removeAvatarDialogDescription">
         <form method="dialog">
             <span class="user-settings-dialog-icon" aria-hidden="true">
                 <i class="fas fa-trash-can"></i>
             </span>
             <h2 id="removeAvatarDialogTitle">Remove profile picture?</h2>
-            <p>The saved photo will be permanently removed from your account storage.</p>
+            <p id="removeAvatarDialogDescription">The saved photo will be permanently removed from your account storage.</p>
             <div>
                 <button value="cancel" class="user-settings-secondary-button">Keep Photo</button>
                 <button value="confirm" class="user-settings-remove-button">Remove Permanently</button>
@@ -256,10 +485,35 @@
         </form>
     </dialog>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <dialog class="user-settings-dialog" id="sessionActionDialog" aria-labelledby="sessionActionDialogTitle" aria-describedby="sessionActionDialogDescription">
+        <form method="dialog">
+            <span class="user-settings-dialog-icon" aria-hidden="true"><i class="fas fa-laptop-shield"></i></span>
+            <h2 id="sessionActionDialogTitle">Sign out other devices?</h2>
+            <p id="sessionActionDialogDescription">Other browser and device sessions will need to sign in again.</p>
+            <div>
+                <button value="cancel" class="user-settings-secondary-button">Cancel</button>
+                <button value="confirm" class="user-settings-remove-button" id="confirmSessionAction">Continue</button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog class="user-settings-dialog" id="clearDevicePreferencesDialog" aria-labelledby="clearDevicePreferencesDialogTitle" aria-describedby="clearDevicePreferencesDialogDescription">
+        <form method="dialog">
+            <span class="user-settings-dialog-icon" aria-hidden="true"><i class="fas fa-rotate-left"></i></span>
+            <h2 id="clearDevicePreferencesDialogTitle">Reset this device?</h2>
+            <p id="clearDevicePreferencesDialogDescription">Theme, colour, language, visual effects and accessibility choices on this device will return to defaults. Your login, account and profile photo stay safe.</p>
+            <div>
+                <button value="cancel" class="user-settings-secondary-button">Keep Preferences</button>
+                <button value="confirm" class="user-settings-remove-button">Reset Device</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.3"></script>
     <script src="effects.js"></script>
     <script src="language.js"></script>
     <script src="user-settings.js"></script>
+    <script src="user-account-settings.js"></script>
 </body>
 
 </html>

@@ -940,10 +940,37 @@ const settingsSections = {
         `
     }
 };
+/* =========================================
+   MOBILE SETTINGS - OPTIONS FIRST
+========================================= */
 
+const settingsSidebar = document.querySelector(".settings-sidebar");
+
+function isMobileSettings() {
+    return window.matchMedia("(max-width: 820px)").matches;
+}
+
+function showMobileSettingsOptions() {
+    if (!isMobileSettings()) return;
+
+    if (settingsSidebar) {
+        settingsSidebar.classList.remove("mobile-section-open");
+    }
+
+    if (settingsContent) {
+        settingsContent.classList.remove("mobile-section-open");
+    }
+
+    settingsNavItems.forEach((item) => {
+        item.classList.remove("active");
+    });
+}
 settingsNavItems.forEach((item) => {
     item.addEventListener("click", () => {
-
+if (isMobileSettings()) {
+    settingsSidebar?.classList.add("mobile-section-open");
+    settingsContent?.classList.add("mobile-section-open");
+}
         const sectionName = item.dataset.section;
         const section = settingsSections[sectionName];
 
@@ -968,6 +995,14 @@ settingsNavItems.forEach((item) => {
 `;
 
 settingsContent.innerHTML = `
+<button
+    type="button"
+    class="mobile-settings-back"
+    id="mobileSettingsBack"
+>
+    <i class="fas fa-arrow-left"></i>
+    Settings
+</button>
     <div class="settings-content-header">
         <h2>${section.title}</h2>
         <p>${section.description}</p>
@@ -975,6 +1010,14 @@ settingsContent.innerHTML = `
 
     ${sectionBody}
 `;
+const mobileSettingsBack =
+    document.getElementById("mobileSettingsBack");
+
+if (mobileSettingsBack) {
+    mobileSettingsBack.addEventListener("click", () => {
+        showMobileSettingsOptions();
+    });
+}
 syncGeneralControls();
 syncAppearanceControls();
 syncLanguageControls();

@@ -8,6 +8,8 @@
 
     const DEFAULT_STYLE = "purple";
     const DEFAULT_COLOR = "#7c5cff";
+    const DEFAULT_THEME_MODE = "dark";
+    const VALID_THEME_MODES = new Set(["dark", "light", "system"]);
 
     const PRESETS = Object.freeze([
         { id: "purple", name: "Purple", color: "#7c5cff" },
@@ -67,6 +69,40 @@
 
         activeStorage.setItem(key, String(value));
         inactiveStorage.removeItem(key);
+    }
+
+    function syncInterfacePreferences() {
+        const root = document.documentElement;
+        const requestedTheme = readPreference(
+            "maThemeMode",
+            DEFAULT_THEME_MODE
+        );
+        const theme = VALID_THEME_MODES.has(requestedTheme)
+            ? requestedTheme
+            : DEFAULT_THEME_MODE;
+        const compact = readPreference(
+            "maCompactInterface",
+            "false"
+        ) === "true";
+        const glass = readPreference(
+            "maGlassEffect",
+            "true"
+        ) !== "false";
+        const smoothScrolling = readPreference(
+            "maSmoothScrolling",
+            "true"
+        ) !== "false";
+
+        root.setAttribute("data-theme", theme);
+        root.setAttribute("data-compact", String(compact));
+        root.setAttribute("data-glass", String(glass));
+        root.setAttribute(
+            "data-remember-preferences",
+            shouldRememberPreferences() ? "true" : "false"
+        );
+        root.style.scrollBehavior = smoothScrolling ? "smooth" : "auto";
+
+        return { theme, compact, glass, smoothScrolling };
     }
 
     function normalizeHex(value, fallbackValue = null) {
@@ -210,12 +246,15 @@
     }
 
     function sync(options = {}) {
+        const interfacePreferences = syncInterfacePreferences();
         const savedStyle = readPreference("maAccentStyle", DEFAULT_STYLE);
         const savedColor = readPreference("maAccentColor", DEFAULT_COLOR);
-        return apply(savedStyle, savedColor, {
+        const accent = apply(savedStyle, savedColor, {
             persist: false,
             announce: options.announce === true
         });
+
+        return { ...accent, ...interfacePreferences };
     }
 
     function getActiveAccent() {
@@ -235,6 +274,7 @@
         normalizeHex,
         apply,
         sync,
+        syncInterfacePreferences,
         getActiveAccent
     });
 
@@ -244,6 +284,10 @@
         if (
             event.key === "maAccentStyle" ||
             event.key === "maAccentColor" ||
+            event.key === "maThemeMode" ||
+            event.key === "maCompactInterface" ||
+            event.key === "maGlassEffect" ||
+            event.key === "maSmoothScrolling" ||
             event.key === "maRememberPreferences"
         ) {
             sync({ announce: true });

@@ -281,13 +281,21 @@ async function syncHeaderUserProfile(user) {
 
     const displayName = getAccountDisplayName(user);
     const avatarPath = user.user_metadata?.avatar_path;
+    const showAvatarInHeader =
+        user.user_metadata?.ma_preferences?.privacy
+            ?.show_avatar_in_header !== false;
 
     userProfileButton?.setAttribute(
         "aria-label",
         `Open User Settings for ${displayName}`
     );
 
-    if (!avatarPath || !headerUserAvatarImage || !headerUserAvatarFallback) {
+    if (
+        !showAvatarInHeader ||
+        !avatarPath ||
+        !headerUserAvatarImage ||
+        !headerUserAvatarFallback
+    ) {
         return;
     }
 
