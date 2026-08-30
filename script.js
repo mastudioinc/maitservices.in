@@ -204,7 +204,7 @@ supabaseClient.auth.onAuthStateChange((event, session) => {
     window.setTimeout(() => {
         if (
             session?.user &&
-            ["INITIAL_SESSION", "SIGNED_IN", "USER_UPDATED", "TOKEN_REFRESHED"].includes(event)
+            ["INITIAL_SESSION", "USER_UPDATED", "TOKEN_REFRESHED"].includes(event)
         ) {
             showAuthenticatedWebsite(session.user);
             return;
@@ -218,6 +218,22 @@ supabaseClient.auth.onAuthStateChange((event, session) => {
 
 console.log("MA IT SERVICES: Supabase client connected");
 const authScreen = document.getElementById("auth-screen");
+const postLoginLoader = document.getElementById("postLoginLoader");
+const postLoginUserAvatar = document.getElementById("postLoginUserAvatar");
+const postLoginUserAvatarFallback = document.getElementById("postLoginUserAvatarFallback");
+const postLoginUserName = document.getElementById("postLoginUserName");
+if (postLoginUserAvatar) {
+    postLoginUserAvatar.addEventListener("error", () => {
+
+        postLoginUserAvatar.removeAttribute("src");
+        postLoginUserAvatar.hidden = true;
+
+        if (postLoginUserAvatarFallback) {
+            postLoginUserAvatarFallback.hidden = false;
+        }
+
+    });
+}
 const loginForm = document.getElementById("login-form");
 const loginEmail = document.getElementById("login-email");
 const loginPassword = document.getElementById("login-password");
@@ -314,7 +330,85 @@ async function syncHeaderUserProfile(user) {
     headerUserAvatarFallback.hidden = true;
     userProfileButton?.classList.add("has-user-avatar");
 }
+async function showAuthenticatedWebsiteWithLoader(user) {
+const loaderDisplayName = getAccountDisplayName(user);
 
+if (postLoginUserName) {
+    postLoginUserName.textContent = loaderDisplayName || "User";
+}
+if (postLoginUserAvatar) {
+    postLoginUserAvatar.removeAttribute("src");
+    postLoginUserAvatar.hidden = true;
+}
+
+if (postLoginUserAvatarFallback) {
+    postLoginUserAvatarFallback.hidden = false;
+}
+const loaderAvatarPath =
+    user?.user_metadata?.avatar_path;
+    if (
+    loaderAvatarPath &&
+    postLoginUserAvatar &&
+    postLoginUserAvatarFallback
+) {
+    const { data, error } =
+        await supabaseClient.storage
+            .from(USER_AVATAR_BUCKET)
+            .createSignedUrl(loaderAvatarPath, 3600);
+            if (!error && data?.signedUrl) {
+
+    const version = encodeURIComponent(
+        user.user_metadata?.avatar_updated_at || "current"
+    );
+
+    postLoginUserAvatar.src =
+        `${data.signedUrl}&v=${version}`;
+
+    postLoginUserAvatar.hidden = false;
+    postLoginUserAvatarFallback.hidden = true;
+}
+}
+
+    if (authScreen) {
+        authScreen.style.display = "none";
+    }
+
+    if (postLoginLoader) {
+        postLoginLoader.hidden = false;
+    }
+
+    const spinner =
+        document.getElementById("postLoginSpinner");
+
+    let spinnerAngle = 0;
+
+    const spinnerTimer = setInterval(() => {
+
+        if (!spinner) return;
+
+        spinnerAngle += 8;
+
+        spinner.style.setProperty(
+            "transform",
+            `rotate(${spinnerAngle}deg)`,
+            "important"
+        );
+
+    }, 16);
+
+
+    setTimeout(() => {
+
+        clearInterval(spinnerTimer);
+
+        if (postLoginLoader) {
+            postLoginLoader.hidden = true;
+        }
+
+        showAuthenticatedWebsite(user);
+
+    }, 6000);
+}
 function showAuthenticatedWebsite(user) {
     if (authScreen) {
         authScreen.style.display = "none";
@@ -735,7 +829,7 @@ if (loginForm) {
         }
 
         loginMessage.textContent = "Login successful";
-        showAuthenticatedWebsite(data.user);
+        showAuthenticatedWebsiteWithLoader(data.user);
         openDefaultStartSection();
     });
 }

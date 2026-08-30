@@ -435,11 +435,6 @@
             currentPassword.focus();
             return;
         }
-        if (!paintPasswordRules()) {
-            setStatus(changePasswordStatus, "The new password must meet every strength requirement.", "error");
-            newPassword.focus();
-            return;
-        }
         if (nextValue !== confirmation) {
             setStatus(changePasswordStatus, "New password and confirmation do not match.", "error");
             confirmNewPassword.focus();

@@ -4719,3 +4719,511 @@ html[data-compact="true"] .settings-page .language-settings-card {
     box-shadow: none !important;
     filter: none !important;
 }
+/* =========================================
+   POST LOGIN - GETTING THINGS READY SCREEN
+========================================= */
+
+.post-login-loader {
+    position: fixed;
+    inset: 0;
+
+    z-index: 999999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(124, 92, 255, 0.13),
+            transparent 45%
+        ),
+        var(--dark, #030617);
+
+    padding: 24px;
+}
+
+.post-login-loader[hidden] {
+    display: none !important;
+}
+
+.post-login-loader-content {
+    width: min(480px, 100%);
+
+    text-align: center;
+
+    padding: 46px 36px;
+
+    border-radius: 28px;
+
+    border: 1px solid
+        rgba(124, 92, 255, 0.32);
+
+    background:
+        rgba(9, 13, 38, 0.88);
+
+    backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.35),
+        0 0 45px rgba(124, 92, 255, 0.10);
+}
+
+.post-login-logo {
+    width: 125px;
+    height: auto;
+
+    margin: 0 auto 24px;
+
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.post-login-spinner {
+    width: 48px;
+    height: 48px;
+
+    margin: 0 auto 22px;
+
+    border-radius: 50%;
+
+    border: 4px solid
+        rgba(255, 255, 255, 0.12);
+
+    border-top-color:
+        var(--website-accent, #7c5cff);
+
+    animation:
+        postLoginSpin 0.85s linear infinite;
+}
+
+@keyframes postLoginSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.post-login-loader h2 {
+    margin: 0 0 10px;
+
+    color: #ffffff;
+
+    font-size: 30px;
+    line-height: 1.2;
+}
+
+.post-login-message {
+    margin: 0 0 24px;
+
+    color: #aaaec2;
+
+    font-size: 14px;
+}
+
+.post-login-progress {
+    width: 100%;
+    height: 5px;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255, 255, 255, 0.08);
+
+    margin-bottom: 30px;
+}
+
+.post-login-progress span {
+    display: block;
+
+    width: 0;
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--website-accent, #7c5cff),
+            var(--website-accent-light, #9f7bff)
+        );
+
+    animation:
+        postLoginProgress 2.4s ease forwards;
+}
+
+@keyframes postLoginProgress {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+.post-login-developer {
+    padding-top: 22px;
+
+    border-top: 1px solid
+        rgba(255, 255, 255, 0.08);
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.post-login-developer span {
+    color: #868ba2;
+    font-size: 12px;
+}
+
+.post-login-developer strong {
+    color: #ffffff;
+
+    font-size: 15px;
+}
+
+.post-login-developer small {
+    color: #8d92aa;
+
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+
+/* LIGHT MODE */
+html[data-theme="light"]
+.post-login-loader {
+    background:
+        radial-gradient(
+            circle at center,
+            var(--website-accent-soft),
+            transparent 48%
+        ),
+        #f3f5fb;
+}
+
+html[data-theme="light"]
+.post-login-loader-content {
+    background:
+        rgba(255, 255, 255, 0.92);
+
+    border-color:
+        var(--website-accent-border);
+}
+
+html[data-theme="light"]
+.post-login-loader h2,
+
+html[data-theme="light"]
+.post-login-developer strong {
+    color: #111224;
+}
+
+html[data-theme="light"]
+.post-login-message,
+
+html[data-theme="light"]
+.post-login-developer span,
+
+html[data-theme="light"]
+.post-login-developer small {
+    color: #676a7c;
+}
+
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+    .post-login-loader-content {
+        padding: 38px 24px;
+
+        border-radius: 22px;
+    }
+
+    .post-login-logo {
+        width: 105px;
+    }
+
+    .post-login-loader h2 {
+        font-size: 25px;
+    }
+}/* =========================================
+   POST LOGIN LOADER - SPINNER FIX
+========================================= */
+
+.post-login-spinner {
+    width: 48px !important;
+    height: 48px !important;
+
+    border: 4px solid rgba(255, 255, 255, 0.12) !important;
+    border-top-color: var(--website-accent, #7c5cff) !important;
+
+    border-radius: 50% !important;
+
+    animation: postLoginSpin 0.8s linear infinite !important;
+
+    transform-origin: center center !important;
+    will-change: transform;
+}
+
+@keyframes postLoginSpin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Progress bar = same duration as loader */
+.post-login-progress span {
+    animation: postLoginProgress 5.5s linear forwards !important;
+}
+
+@keyframes postLoginProgress {
+    from {
+        width: 0%;
+    }
+
+    to {
+        width: 100%;
+    }
+}.post-login-spinner-svg {
+    display: block !important;
+
+    width: 48px !important;
+    height: 48px !important;
+
+    margin: 0 auto 22px !important;
+
+    color: var(--website-accent, #7c5cff) !important;
+}/* =========================================
+   POST LOGIN - USER IDENTITY
+========================================= */
+
+.post-login-identity {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+
+    margin-bottom: 22px;
+}
+
+/* MA IT SERVICES LOGO */
+.post-login-identity .post-login-logo {
+    width: 105px !important;
+    height: auto !important;
+    margin: 0 !important;
+}
+
+
+/* USER PROFILE + NAME */
+.post-login-user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    padding: 10px 16px;
+
+    border: 1px solid rgba(124, 92, 255, 0.28);
+    border-radius: 16px;
+
+    background: rgba(255, 255, 255, 0.035);
+}
+
+
+/* PROFILE PHOTO */
+.post-login-avatar-wrap {
+    width: 46px;
+    height: 46px;
+
+    flex: 0 0 46px;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    border: 2px solid var(--website-accent, #7c5cff);
+
+    background: rgba(124, 92, 255, 0.12);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.post-login-user-avatar {
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    margin: 0 !important;
+}
+
+
+/* FALLBACK ICON */
+.post-login-avatar-fallback {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--website-accent, #7c5cff);
+
+    font-size: 18px;
+}
+
+
+/* USER NAME */
+.post-login-user-info {
+    display: flex;
+    flex-direction: column;
+
+    text-align: left;
+
+    gap: 2px;
+}
+
+.post-login-user-info span {
+    font-size: 10px;
+    color: #8d92aa;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.post-login-user-info strong {
+    max-width: 230px;
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* LIGHT MODE */
+html[data-theme="light"] .post-login-user {
+    background: rgba(255, 255, 255, 0.75);
+}
+
+html[data-theme="light"] .post-login-user-info strong {
+    color: #111224;
+}
+
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+    .post-login-user {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .post-login-user-info strong {
+        max-width: 190px;
+        font-size: 13px;
+    }
+}/* =========================================
+   POST LOGIN - DEFAULT USER AVATAR
+========================================= */
+
+.post-login-avatar-fallback {
+    width: 100% !important;
+    height: 100% !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    background: transparent !important;
+    overflow: hidden !important;
+}
+
+.post-login-default-avatar {
+    width: 100% !important;
+    height: 100% !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    border-radius: 50% !important;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(124, 92, 255, 0.32),
+            rgba(80, 120, 255, 0.12)
+        ) !important;
+
+    color: #ffffff !important;
+
+    box-shadow:
+        inset 0 0 16px rgba(124, 92, 255, 0.22) !important;
+}
+
+.post-login-default-avatar i {
+    font-size: 19px !important;
+    color: #ffffff !important;
+
+    width: auto !important;
+    height: auto !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    line-height: 1 !important;
+}
+
+/* LIGHT MODE */
+html[data-theme="light"] .post-login-default-avatar {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(124, 92, 255, 0.20),
+            rgba(70, 110, 255, 0.08)
+        ) !important;
+
+    color: #25263a !important;
+}
+
+html[data-theme="light"] .post-login-default-avatar i {
+    color: #25263a !important;
+}/* =========================================
+   POST LOGIN AVATAR - HIDDEN FIX
+========================================= */
+
+.post-login-user-avatar[hidden] {
+    display: none !important;
+}
+
+.post-login-avatar-fallback[hidden] {
+    display: none !important;
+}
+
+.post-login-user-avatar:not([hidden]) {
+    display: block !important;
+}
+
+.post-login-avatar-fallback:not([hidden]) {
+    display: flex !important;
+}
